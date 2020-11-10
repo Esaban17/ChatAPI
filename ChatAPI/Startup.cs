@@ -38,6 +38,8 @@ namespace ChatAPI
 
             services.AddSingleton<UserService>();
 
+            services.AddCors();
+
             services.AddControllers();
         }
 
@@ -52,6 +54,8 @@ namespace ChatAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseAuthorization();
 

@@ -38,12 +38,12 @@ namespace ChatAPI.Controllers
         // GET: api/User
         [Route("api/user")]
         [HttpGet]
-        public ActionResult<List<User>> Get() => _userService.Get();
+        public ActionResult<List<User>> GetUsers() => _userService.Get();
 
         // GET: api/User/5
         [Route("api/user/{id:length(24)}", Name = "GetUser")]
         [HttpGet]
-        public ActionResult<User> Get(string id)
+        public ActionResult<User> GetUser(string id)
         {
             var user = _userService.Get(id);
 
@@ -58,22 +58,39 @@ namespace ChatAPI.Controllers
         // POST: api/User
         [Route("api/user")]
         [HttpPost]
-        public ActionResult<User> Create(User user)
+        public ActionResult<User> Register(User user)
         {
             _userService.Create(user);
 
             return CreatedAtRoute("GetUser", new { id = user.Id.ToString() }, user);
         }
 
+        // POST: api/User
+        [Route("api/user/login")]
+        [HttpPost]
+        public ActionResult<User> Login(User user)
+        {
+            var userLogged = _userService.Get(user.Username);
+
+            if (userLogged != null)
+            {
+                if (userLogged.Password == user.Password)
+                {
+                    return CreatedAtRoute("GetUser", new { id = user.Id.ToString() }, user);
+                }
+            }
+            return NotFound();
+        }
+
 
         // PUT: api/User/5
         [Route("api/user/{id:length(24)}")]
         [HttpPut]
-        public IActionResult Update(string id, User userIn)
+        public IActionResult UpdateUser(string id, User userIn)
         {
-            var book = _userService.Get(id);
+            var user = _userService.Get(id);
 
-            if (book == null)
+            if (user == null)
             {
                 return NotFound();
             }
@@ -86,7 +103,7 @@ namespace ChatAPI.Controllers
         // DELETE: api/User/5
         [Route("api/user/{id:length(24)}")]
         [HttpDelete]
-        public IActionResult Delete(string id)
+        public IActionResult DeleteUser(string id)
         {
             var user = _userService.Get(id);
 
