@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -7,6 +7,19 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Compressor\Compressor.csproj" />
+    <ProjectReference Include="..\Encryptors\Encryptors.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\Compressed\" />
+    <Folder Include="Resources\Decompressed\" />
+    <Folder Include="Resources\Decrypted\" />
+    <Folder Include="Resources\Encrypted\" />
+    <Folder Include="Resources\Files\" />
   </ItemGroup>
 
 
